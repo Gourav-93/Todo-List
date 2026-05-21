@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow // Standalone Premium ToDo Application</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+                <div>
+                    <h1>TaskFlow</h1>
+                    <p class="subtitle">Streamline your daily execution &bull; Decoupled UI</p>
+                </div>
+            </div>
+            
+            <div class="header-actions">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" class="btn-icon" title="Toggle Theme" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button id="btnNewTask" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> New Task
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Board -->
+        <section class="stats-board">
+            <div class="stat-card" id="statAll">
+                <div class="stat-icon all"><i class="fa-solid fa-globe"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Total Tasks</span>
+                </div>
+            </div>
+            <div class="stat-card" id="statPending">
+                <div class="stat-icon pending"><i class="fa-solid fa-hourglass-half"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Pending</span>
+                </div>
+            </div>
+            <div class="stat-card" id="statCompleted">
+                <div class="stat-icon completed"><i class="fa-solid fa-circle-check"></i></div>
+                <div class="stat-info">
+                    <span class="stat-value">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Toolbar -->
+            <div class="toolbar">
+                <!-- Filters -->
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">All Tasks</button>
+                    <button class="filter-tab" data-filter="pending">Pending</button>
+                    <button class="filter-tab" data-filter="completed">Completed</button>
+                </div>
+
+                <!-- Search -->
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="taskSearch" placeholder="Search tasks by title or desc...">
+                </div>
+            </div>
+
+            <!-- Task List View -->
+            <div class="task-list-wrapper">
+                <div id="taskList" class="task-list">
+                    <!-- Dynamic tasks will be injected here -->
+                    <div class="loading-state">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <p>Connecting to backend API (localhost:8080)...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>TaskFlow &copy; 2026. Production Ready &bull; Standalone UI.</p>
+        </footer>
+    </div>
+
+    <!-- Task Modal (Create & Edit) -->
+    <div id="taskModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modalTitle">Create New Task</h3>
+                <button class="btn-close-modal" id="btnCancelModal">&times;</button>
+            </div>
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                
+                <div class="form-group">
+                    <label for="titleInput">Task Title</label>
+                    <input type="text" id="titleInput" placeholder="e.g. Prepare system demo" required maxlength="100">
+                    <span class="validation-error" id="titleError"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="descInput">Description</label>
+                    <textarea id="descInput" rows="4" placeholder="Describe the steps or details..." required></textarea>
+                    <span class="validation-error" id="descError"></span>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btnSecondaryModal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="btnSubmitModal">Create Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
